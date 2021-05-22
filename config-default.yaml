@@ -4,6 +4,9 @@ general:
   logging_level: DEBUG
   api_version: 1.0.0.0
 
+stereo_processor:
+  path_to_unzip: data/extracted
+  threshold: 1000
 
 
 flask:

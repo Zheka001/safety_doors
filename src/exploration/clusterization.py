@@ -7,7 +7,7 @@ from src.utils.extracting import remove_extracted, unzip
 if __name__ == '__main__':
 
     print("Load a ply point cloud, print it, and render it")
-    path_to_file = unzip('../../data/clouds_stereo/cloud_2_1620666790467281.pcd.zip', 'data/extracted')
+    path_to_file = unzip('data/clouds_stereo/cloud_2_1620666790467281.pcd.zip', 'data/extracted')
     pcd = o3d.io.read_point_cloud(path_to_file)
     pcd.estimate_normals(search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=0.1, max_nn=16), fast_normal_computation=True)
     plane_model, inliers = pcd.segment_plane(distance_threshold=0.05, ransac_n=3, num_iterations=1000)
