@@ -131,4 +131,5 @@ dmypy.json
 
 # project
 /data
+/db
 config.yaml

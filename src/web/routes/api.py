@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
-
+from uuid import uuid4
 from flask import Blueprint
 from flask_restful import Api, Resource, request
+
+from src.utils.extracting import unzip
 
 
 api_bp = Blueprint('api', __name__)
@@ -22,16 +24,31 @@ class ImageProcessingResource(Resource):
 
     # @login_required
     def post(self):
-        path_to_file = Path(request.args.get('filename'))
-        if not path_to_file.exists():
-            return {'message': 'videofile does not exist'}, 404
+        file = request.files['file']
+        filename = self.save_file_to_disk(file)
+        if filename is None:
+            return {'message': 'invalid type of file'}, 404
         try:
-            # result = process()
-            result = None
+            result = self.process(filename)
             return result, 200
         except Exception as e:
             return {'message': e}, 404
 
+    def process(self, filename):
+        print(filename)
+        return {'alert': 1}
+
+    def save_file_to_disk(self, file):
+        if self.allowed_file(file.filename):
+            filename = str(Path('db').joinpath(file.filename))
+            file.save(Path('db').joinpath(file.filename))
+            return filename
+        return None
+
+    @staticmethod
+    def allowed_file(filename):
+        return '.' in filename and filename[-3:] in ['zip', 'pcb']
+
 
 api.add_resource(VersionResource, '/version')
-api.add_resource(ImageProcessingResource, '/api/1/video_processing')
+api.add_resource(ImageProcessingResource, '/api/1/image_processing')

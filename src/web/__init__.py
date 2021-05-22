@@ -6,7 +6,7 @@ from src.web.routes import misc_bp, api_bp
 
 
 def create_flask_application(config):
-    application = Flask("Switcher_Recognizer")
+    application = Flask('Safety Doors')
     application.config.from_object(config.flask)
     application.register_blueprint(api_bp)
     application.debug = config.general.logging_level == 'DEBUG'
