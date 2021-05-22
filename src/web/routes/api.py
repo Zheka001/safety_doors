@@ -42,6 +42,10 @@ class ImageProcessingResource(Resource):
         if self.allowed_file(file.filename):
             filename = str(Path('db').joinpath(file.filename))
             file.save(Path('db').joinpath(file.filename))
+            if filename[-3:] == 'zip':
+                path_to_file = unzip(filename, str(Path(filename).parent))
+                Path(filename).unlink()
+                filename = path_to_file
             return filename
         return None
 
