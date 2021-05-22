@@ -8,6 +8,12 @@ stereo_processor:
   path_to_unzip: data/extracted
   threshold: 1000
 
+label_creator:
+  path_to_data: data/clouds_tof
+  result_json: data/clouds_tof.json
+
+train:
+  path_to_dataset: data/dataset.json
 
 flask:
   SECRET_KEY: very-long-and-very-secret-key

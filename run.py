@@ -5,6 +5,7 @@ from flask_script import Manager, Server, Command
 from src.web import create_flask_application
 from src.utils.config import SingleConfig
 from src.assessment.label_creator import LabelCreator
+from src.ml.train import train
 
 
 def get_manager():
@@ -19,6 +20,7 @@ def get_manager():
     manager = Manager(application)
     manager.add_command('app', Server(host=host, port=port))
     manager.add_command('label', Command(LabelCreator.run))
+    manager.add_command('train', Command(train))
     return manager
 
 
