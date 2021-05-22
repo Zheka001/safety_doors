@@ -1,19 +1,18 @@
 general:
   working_dir: ./
-  resources_dir: ./resources
   logging_level: DEBUG
   api_version: 1.0.0.0
 
-stereo_processor:
-  path_to_unzip: data/extracted
-  threshold: 1000
-
 label_creator:
-  path_to_data: data/clouds_tof
-  result_json: data/clouds_tof.json
+  path_to_data: data/clouds_tof # путь к папке с данными для режима tof
+  result_json: data/clouds_tof.json # путь к результирующему файлу в формате json
 
 train:
-  path_to_dataset: data/dataset.json
+  path_to_dataset: data/dataset.json # путь к датасету для обучения
+
+data_processor:
+  path_to_data: data # путь к папке с данными для проведения анализа
+  result_json: data/result.json # путь к результирующему файлу в формате json
 
 flask:
   SECRET_KEY: very-long-and-very-secret-key
