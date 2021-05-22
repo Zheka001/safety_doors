@@ -14,10 +14,10 @@ class Classifier:
         self._labels_path = Path('data/clouds_tof.json')
         self._pcd_path = Path('data/point_cloud_train/clouds_tof')
         self._saved_features_path = Path('data/features.json')
-        self._model_path = 'data/model/model.pkl'
+        self._model_path = 'resources/model/model.pkl'
         self._X = None
         self._y = None
-        self.alfa_list = [5, 6, 7, 8]
+        self.alfa_list = [5,8,10,12]
         self.voxel_downsample = None
         self._model = None
         if Path(self._model_path).exists():
@@ -79,8 +79,8 @@ class Classifier:
 
 if __name__ == "__main__":
     cls = Classifier()
-    cls.load_data_and_labels([5,6,7,8], None)
-    cls.train()
+    # cls.load_data_and_labels([5,8,10,12], None)
+    # cls.train()
     print(cls.predict("data/point_cloud_train/clouds_tof/cloud_0_1620665797175109.pcd"))
 
 
