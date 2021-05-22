@@ -4,7 +4,6 @@ from pathlib import Path
 from flask import Blueprint
 from flask_restful import Api, Resource, request
 
-from src.ml.video_processor import VideoProcessor
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
