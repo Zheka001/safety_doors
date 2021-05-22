@@ -22,7 +22,7 @@ class DataProcessor:
             result = self._classifier.predict(path_to_file)
             self._json_list.append({
                 'alert': result.tolist()[0],
-                'filename': path_to_file,
+                'filename': str(Path(path_to_file).name),
                 'number': i,
             })
             remove_extracted(path_to_file)
