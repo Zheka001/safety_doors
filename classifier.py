@@ -79,8 +79,8 @@ class Classifier:
 
 if __name__ == "__main__":
     cls = Classifier()
-    # cls.load_data_and_labels([5,8,10,12], None)
-    # cls.train()
+    cls.load_data_and_labels([5,8,10,12], None)
+    cls.train()
     print(cls.predict("data/point_cloud_train/clouds_tof/cloud_0_1620665797175109.pcd"))
 
 

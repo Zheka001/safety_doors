@@ -74,7 +74,7 @@ class FeatureExtractor:
         plane_model, inliers = pcd.segment_plane(distance_threshold=0.05, ransac_n=3, num_iterations=1000)
         inlier_cloud = pcd.select_by_index(inliers)
         outliers_cloud = pcd.select_by_index(inliers, invert=True)
-        plane2_model, inliers2 = outliers_cloud.segment_plane(distance_threshold=0.1, ransac_n=3, num_iterations=5000)
+        plane2_model, inliers2 = outliers_cloud.segment_plane(distance_threshold=0.05, ransac_n=3, num_iterations=5000)
         inlier_cloud2 = outliers_cloud.select_by_index(inliers2)
         outliers_cloud2 = outliers_cloud.select_by_index(inliers2, invert=True)
         inlier_cloud.paint_uniform_color([1, 0, 0])
