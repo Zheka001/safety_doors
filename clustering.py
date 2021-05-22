@@ -66,7 +66,7 @@ def count_poi(plane1: np.ndarray, plane2: np.ndarray, other: np.ndarray, alpha=[
 
     return result
 
-def extract_features(pcd_path: str, alpha_list=[5, 6, 7], voxel_size=None, show=False):
+def extract_features(pcd_path: str, alpha_list, voxel_size=None, show=False):
     pcd = o3d.io.read_point_cloud(pcd_path)
     if voxel_size is not None:
         pcd.voxel_down_sample(voxel_size=0.5)
