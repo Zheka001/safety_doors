@@ -27,7 +27,7 @@ class Classifier(metaclass=SingletonMeta):
         if Path(self._model_path).exists():
             self._load_model()
 
-    def load_data_and_labels(self, alpha_list, voxel_size):
+    def load_data_and_labels(self, voxel_size):
         with self._labels_path.open() as f:
             labels_dicts = json.load(f)
         features = []
@@ -43,7 +43,7 @@ class Classifier(metaclass=SingletonMeta):
             if features_exist:
                 feature = loaded_features[record['filename']]
             else:
-                feature = FeatureExtractor.extract_features(cur_pcd, alpha_list, voxel_size=voxel_size)
+                feature = FeatureExtractor.extract_features(cur_pcd, self.alpha_list, voxel_size=voxel_size)
                 to_save[record['filename']] = feature
             features.append(feature)
         if not features_exist:
@@ -61,7 +61,7 @@ class Classifier(metaclass=SingletonMeta):
         cls = LogisticRegression()
         cls.fit(X_train, y_train)
         y_pred = cls.predict(X_test)
-        print(y_pred)
+        # print(y_pred)
         f1 = f1_score(y_test, y_pred)
         print('F1 score on test set:', f1)
 
@@ -83,6 +83,7 @@ class Classifier(metaclass=SingletonMeta):
     @staticmethod
     def run():
         cls = Classifier()
+        cls.load_data_and_labels(voxel_size=None)
         cls.train()
 
 if __name__ == "__main__":
