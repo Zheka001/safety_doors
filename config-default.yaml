@@ -1,0 +1,16 @@
+general:
+  working_dir: ./
+  resources_dir: ./resources
+  logging_level: DEBUG
+  api_version: 1.0.0.0
+
+
+
+flask:
+  SECRET_KEY: very-long-and-very-secret-key
+  ORIGINS: ['http://127.0.0.1:8080', 'http://localhost:8080']
+  SQLALCHEMY_ECHO: False # если True, то SQLAlchemy выводит все сообщения в stderr
+  SQLALCHEMY_TRACK_MODIFICATIONS: False # если True, то Flask-SQLAlchemy отслеживает изменения объектов и посылает соответствующие сигналы
+  REMEMBER_COOKIE_DURATION: 600
+  REMEMBER_COOKIE_HTTPONLY: False
+  REMEMBER_COOKIE_REFRESH_EACH_REQUEST: True
