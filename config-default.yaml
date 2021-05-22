@@ -1,18 +1,23 @@
 general:
   working_dir: ./
+  resources_dir: ./resources
   logging_level: DEBUG
   api_version: 1.0.0.0
 
 label_creator:
-  path_to_data: data/clouds_tof # путь к папке с данными для режима tof
-  result_json: data/clouds_tof.json # путь к результирующему файлу в формате json
-
-train:
-  path_to_dataset: data/dataset.json # путь к датасету для обучения
+  path_to_data: data/point_cloud_gt/clouds_tof
+  result_json: data/clouds_tof_gt.json
 
 data_processor:
-  path_to_data: data # путь к папке с данными для проведения анализа
-  result_json: data/result.json # путь к результирующему файлу в формате json
+  path_to_data: data/point_cloud_gt/clouds_tof
+  result_json: data/clouds_tof_gt.json
+
+classifier:
+  labels_path: data/clouds_tof.json
+  data_path: data/point_cloud_train/clouds_tof
+  saved_features_path: data/features.json
+  model_path: resources/model/model.pkl
+  alpha_list: [5, 8, 10, 12]
 
 flask:
   SECRET_KEY: very-long-and-very-secret-key

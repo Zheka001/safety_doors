@@ -8,21 +8,24 @@ from sklearn.metrics import f1_score
 import numpy as np
 
 from src.ml.feature_extractor import FeatureExtractor
+from src.utils.config import SingleConfig, SingletonMeta
 
-class Classifier:
+
+class Classifier(metaclass=SingletonMeta):
     def __init__(self):
-        self._labels_path = Path('data/clouds_tof.json')
-        self._pcd_path = Path('data/point_cloud_train/clouds_tof')
-        self._saved_features_path = Path('data/features.json')
-        self._model_path = 'resources/model/model.pkl'
+        self._config = SingleConfig().get_part('classifier')
+        self._labels_path = Path(self._config.labels_path)
+        self._pcd_path = Path(self._config.data_path)
+        self._saved_features_path = Path(self._config.saved_features_path)
+        self._model_path = Path(self._config.model_path)
+        self.alpha_list = self._config.alpha_list
+        self.voxel_downsample = None
+
         self._X = None
         self._y = None
-        self.alfa_list = [5,8,10,12]
-        self.voxel_downsample = None
         self._model = None
         if Path(self._model_path).exists():
             self._load_model()
-
 
     def load_data_and_labels(self, alpha_list, voxel_size):
         with self._labels_path.open() as f:
@@ -66,7 +69,7 @@ class Classifier:
         self._save_model()
 
     def predict(self, pcd_path: str):
-        feature = FeatureExtractor.extract_features(pcd_path, self.alfa_list, voxel_size=self.voxel_downsample)
+        feature = FeatureExtractor.extract_features(pcd_path, self.alpha_list, voxel_size=self.voxel_downsample)
         return self._model.predict([feature])
 
     def _save_model(self):
@@ -77,10 +80,15 @@ class Classifier:
         with open(self._model_path, 'rb') as input:
             self._model = pickle.load(input)
 
+    @staticmethod
+    def run():
+        cls = Classifier()
+        cls.train()
+
 if __name__ == "__main__":
     cls = Classifier()
-    cls.load_data_and_labels([5,8,10,12], None)
-    cls.train()
+    # cls.load_data_and_labels([5,8,10,12], None)
+    # cls.train()
     print(cls.predict("data/point_cloud_train/clouds_tof/cloud_0_1620665797175109.pcd"))
 
 

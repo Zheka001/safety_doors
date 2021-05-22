@@ -4,6 +4,7 @@ from uuid import uuid4
 from flask import Blueprint
 from flask_restful import Api, Resource, request
 
+from src.ml.classifier import Classifier
 from src.utils.extracting import unzip
 
 
@@ -21,6 +22,7 @@ class VersionResource(Resource):
 class ImageProcessingResource(Resource):
     def __init__(self, *args, **kwargs):
         super(ImageProcessingResource, self).__init__(*args, **kwargs)
+        self._classifier = Classifier()
 
     # @login_required
     def post(self):
@@ -35,8 +37,8 @@ class ImageProcessingResource(Resource):
             return {'message': e}, 404
 
     def process(self, filename):
-        print(filename)
-        return {'alert': 1}
+        result = self._classifier.predict(filename)
+        return {'alert': result.tolist()[0], 'filename': filename}
 
     def save_file_to_disk(self, file):
         if self.allowed_file(file.filename):

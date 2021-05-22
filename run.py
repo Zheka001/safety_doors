@@ -5,7 +5,8 @@ from flask_script import Manager, Server, Command
 from src.web import create_flask_application
 from src.utils.config import SingleConfig
 from src.assessment.label_creator import LabelCreator
-from src.ml.train import train
+from src.ml.classifier import Classifier
+from src.ml.data_processor import DataProcessor
 
 
 def get_manager():
@@ -20,7 +21,8 @@ def get_manager():
     manager = Manager(application)
     manager.add_command('app', Server(host=host, port=port))
     manager.add_command('label', Command(LabelCreator.run))
-    manager.add_command('train', Command(train))
+    manager.add_command('train', Command(Classifier.run))
+    manager.add_command('predict', Command(DataProcessor.run))
     return manager
 
 
