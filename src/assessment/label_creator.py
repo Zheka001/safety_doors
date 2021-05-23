@@ -15,12 +15,13 @@ class LabelCreator:
 
     def process(self):
         for i, elem in enumerate(Path(self._config.path_to_data).iterdir()):
-            path_to_file = unzip(str(elem), str(elem.parent))
+            path_to_file = unzip(str(elem), str(elem.parent)) if '.zip' in str(elem) else str(elem)
             if path_to_file is None:
                 continue
             self._show_pcd(path_to_file)
             self._process_label(path_to_file, i)
-            remove_extracted(path_to_file)
+            if '.zip' in str(elem):
+                remove_extracted(path_to_file)
 
             if i % 10 == 0:
                 self._write_to_json()
